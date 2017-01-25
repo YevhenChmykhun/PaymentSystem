@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>PaymentSystem</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri>customtags</taglib-uri>
+            <taglib-location>/WEB-INF/tld/customtags.tld</taglib-location>
+        </taglib>
+        <!--        <jsp-property-group>
+                    <description>JSPF configuration for the main part</description>
+                    <url-pattern>/WEB-INF/view/user/jsp/*</url-pattern>
+                    <include-prelude>/WEB-INF/view/user/jspf/header.jspf</include-prelude>
+                    <include-coda>/WEB-INF/view/user/jspf/footer.jspf</include-coda>
+                </jsp-property-group>-->
+        <jsp-property-group>
+            <description>JSPF configuration for the admin panel</description>
+            <url-pattern>/WEB-INF/view/admin/jsp/*</url-pattern>
+            <include-prelude>/WEB-INF/view/admin/jspf/header.jspf</include-prelude>
+            <include-coda>/WEB-INF/view/admin/jspf/footer.jspf</include-coda>
+        </jsp-property-group>
+    </jsp-config>
+
+    <listener>
+        <listener-class>com.chmykhun.listener.SessionListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>SessionTimeoutFilter</filter-name>
+        <filter-class>com.chmykhun.filter.SessionTimeoutFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionTimeoutFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AdminAccessFilter</filter-name>
+        <filter-class>com.chmykhun.filter.AdminAccessFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminAccessFilter</filter-name>
+        <url-pattern>/admin</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>UserAccessFilter</filter-name>
+        <filter-class>com.chmykhun.filter.UserAccessFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserAccessFilter</filter-name>
+        <url-pattern>/user</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>GzipFilter</filter-name>
+        <filter-class>com.chmykhun.filter.gzip.GzipFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>GzipFilter</filter-name>
+        <url-pattern>*.js</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>GzipFilter</filter-name>
+        <url-pattern>*.css</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>GzipFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>GzipFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>GzipFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.chmykhun.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>com.chmykhun.servlet.Controller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/controller</url-pattern>
+        <url-pattern>/admin</url-pattern>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>
+            10
+        </session-timeout>
+    </session-config>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>messages</param-value>
+    </context-param>
+
+</web-app>

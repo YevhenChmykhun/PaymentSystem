@@ -1,0 +1,31 @@
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.4.0//EN"
+        "http://commons.apache.org/dtds/validator_1_4_0.dtd">
+
+<form-validation>
+    <global>
+        <validator name="required"
+                   classname="com.chmykhun.validation.ValidationRules"
+                   method="validateRequired"
+                   methodParams="java.lang.Object, org.apache.commons.validator.Field"
+                   msg="the field is required"/>
+
+        <validator name="phoneNumber"
+                   classname="com.chmykhun.validation.ValidationRules"
+                   method="validatePhoneNumber"
+                   methodParams="java.lang.Object, org.apache.commons.validator.Field"
+                   msg="please enter valid phone number"/>
+    </global>
+
+    <formset>
+        <form name="SignInForm">
+            <field property="phoneNumber" depends="required, phoneNumber">
+                <msg key="validation.required" name="required" resource="false"/>
+                <msg key="validation.phone_number" name="phoneNumber" resource="false"/>
+            </field>
+            <field property="password" depends="required">
+                <msg key="validation.required" name="required" resource="false"/>
+            </field>
+        </form>
+    </formset>
+</form-validation>
